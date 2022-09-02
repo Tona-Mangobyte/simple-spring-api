@@ -8,10 +8,10 @@ import com.mb.article.services.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/api/category")
 public class CategoryController extends BaseController<Category> {
-    private CategoryService categoryService;
-    public CategoryController(CategoryService categoryService){
+    private final CategoryService categoryService;
+    public CategoryController(final CategoryService categoryService){
         this.categoryService = categoryService;
     }
 
@@ -20,7 +20,7 @@ public class CategoryController extends BaseController<Category> {
         return this.listResponse("request success", this.categoryService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ObjectResponse<Category> getById(@PathVariable("id") Long id) {
         return this.response("request success", this.categoryService.findOne(id));
     }
