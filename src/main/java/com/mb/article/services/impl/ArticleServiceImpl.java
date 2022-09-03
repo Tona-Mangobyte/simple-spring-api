@@ -10,6 +10,7 @@ import com.mb.article.services.ArticleService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -35,7 +36,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article findOne(Long id) {
-        return this.articleRepository.findById(id).orElse(null);
+        return this.articleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Article not found"));
     }
 
     @Override

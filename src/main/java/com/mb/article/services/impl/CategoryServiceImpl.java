@@ -10,6 +10,7 @@ import com.mb.article.services.CategoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -35,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category findOne(Long id) {
-        return this.categoryRepository.findById(id).orElse(null);
+        return this.categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Category not found"));
     }
 
     @Override

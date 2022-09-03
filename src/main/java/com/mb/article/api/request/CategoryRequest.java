@@ -1,3 +1,5 @@
 package com.mb.article.api.request;
 
-public record CategoryRequest(Long id, String name) {}
+import javax.validation.constraints.NotBlank;
+
+public record CategoryRequest(Long id, @NotBlank(message = "Name is required") String name) {}

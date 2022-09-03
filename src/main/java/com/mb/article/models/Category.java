@@ -1,6 +1,7 @@
 package com.mb.article.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="categories")
@@ -9,6 +10,7 @@ public class Category {
     @GeneratedValue
     private Long id;
 
+    @NotBlank(message = "Name is required")
     @Column(name = "name")
     private String name;
 
