@@ -1,6 +1,7 @@
 package com.mb.article.api.controllers;
 
 import com.mb.article.api.request.CategoryRequest;
+import com.mb.article.api.request.RequestPaging;
 import com.mb.article.api.response.ListResponse;
 import com.mb.article.api.response.ObjectResponse;
 import com.mb.article.models.Category;
@@ -16,8 +17,11 @@ public class CategoryController extends BaseController<Category> {
     }
 
     @GetMapping
-    public ListResponse<Category> getAll() {
-        return this.listResponse("request success", this.categoryService.findAll());
+    public ListResponse getAll(
+            @RequestParam(defaultValue = "1", required = false) Integer page,
+            @RequestParam(defaultValue = "30", required = false) Integer limit) {
+        return this.listResponse("request success",
+                this.categoryService.findPaging(RequestPaging.of(page - 1, limit)));
     }
 
     @GetMapping("{id}")

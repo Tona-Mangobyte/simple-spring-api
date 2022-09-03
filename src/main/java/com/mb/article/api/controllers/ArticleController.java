@@ -1,6 +1,7 @@
 package com.mb.article.api.controllers;
 
 import com.mb.article.api.request.ArticleRequest;
+import com.mb.article.api.request.RequestPaging;
 import com.mb.article.api.response.ListResponse;
 import com.mb.article.api.response.ObjectResponse;
 import com.mb.article.models.Article;
@@ -17,8 +18,10 @@ public class ArticleController extends BaseController<Article> {
     }
 
     @GetMapping
-    public ListResponse<Article> getAll() {
-        return this.listResponse("request success", this.articleService.findAll());
+    public ListResponse getAll(@RequestParam(defaultValue = "1", required = false) Integer page,
+                               @RequestParam(defaultValue = "30", required = false) Integer limit) {
+        return this.listResponse("request success",
+                this.articleService.findPaging(RequestPaging.of(page - 1, limit)));
     }
 
     @GetMapping("{id}")
