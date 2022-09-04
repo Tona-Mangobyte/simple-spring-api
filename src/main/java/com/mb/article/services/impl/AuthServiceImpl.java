@@ -1,6 +1,6 @@
 package com.mb.article.services.impl;
 
-import com.mb.article.api.request.JwtRequest;
+import com.mb.article.api.request.AuthRequest;
 import com.mb.article.api.response.AuthResponse;
 import com.mb.article.security.JwtTokenUtil;
 import com.mb.article.services.AuthService;
@@ -25,7 +25,7 @@ public class AuthServiceImpl implements AuthService {
     UserDetailsService userDetailsService;
 
     @Override
-    public AuthResponse authentication(JwtRequest auth) {
+    public AuthResponse authentication(AuthRequest auth) {
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(auth.username());
             authenticate(auth.username(), auth.password());

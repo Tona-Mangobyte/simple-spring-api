@@ -1,6 +1,6 @@
 package com.mb.article.api.controllers;
 
-import com.mb.article.api.request.JwtRequest;
+import com.mb.article.api.request.AuthRequest;
 import com.mb.article.api.response.AuthResponse;
 import com.mb.article.api.response.ObjectResponse;
 import com.mb.article.services.AuthService;
@@ -17,7 +17,7 @@ public class AuthController extends BaseController<AuthResponse> {
     private AuthService authService;
 
     @PostMapping("/login")
-    public ObjectResponse<AuthResponse> auth(@RequestBody JwtRequest auth) {
+    public ObjectResponse<AuthResponse> auth(@RequestBody AuthRequest auth) {
         return this.response("Authentication is success", authService.authentication(auth));
     }
 }
