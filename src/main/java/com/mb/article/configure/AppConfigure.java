@@ -7,6 +7,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages="com.mb.article.repositories")
+@EnableJpaRepositories("com.mb.article.repositories")
 @EnableJpaAuditing
 public class AppConfigure {}
