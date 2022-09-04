@@ -30,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
     public ItemsPagination<Category> findPaging(RequestPaging paging) {
         Page<Category> categoryPage = this.categoryRepository.findAll(paging);
         return new ItemsPagination<>(categoryPage.stream().toList()
-                , new PagingResponse(categoryPage.getNumber() + 1, paging.getPageSize()
+                , new PagingResponse(categoryPage.getNumber(), paging.getPageSize()
                 , categoryPage.getTotalPages(), categoryPage.hasNext(), categoryPage.hasPrevious()));
     }
 

@@ -28,8 +28,7 @@ public class AuthServiceImpl implements AuthService {
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(auth.username());
             authenticate(auth.username(), auth.password());
-            String token = jwtTokenUtil.generateToken(userDetails);
-            return "Bearer " + token;
+            return jwtTokenUtil.generateToken(userDetails);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

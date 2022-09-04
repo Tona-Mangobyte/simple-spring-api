@@ -22,7 +22,7 @@ public class UserController extends BaseController<User> {
             @RequestParam(defaultValue = "1", required = false) Integer page,
             @RequestParam(defaultValue = "30", required = false) Integer limit) {
         return this.listResponse("request success",
-                this.userService.findPaging(RequestPaging.of(page - 1, limit)));
+                this.userService.findPaging(RequestPaging.of(page, limit)));
     }
 
     @GetMapping("{id}")

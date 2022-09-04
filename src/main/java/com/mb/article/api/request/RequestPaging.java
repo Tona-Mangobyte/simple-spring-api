@@ -10,7 +10,7 @@ public class RequestPaging extends PageRequest {
     }
 
     public static RequestPaging of(int page, int size) {
-        return of(page, size, Sort.unsorted());
+        return of(page - 1, size, Sort.unsorted());
     }
 
     public static RequestPaging of(int page, int size, Sort sort) {
@@ -23,5 +23,10 @@ public class RequestPaging extends PageRequest {
 
     public static RequestPaging ofSize(int pageSize) {
         return RequestPaging.of(0, pageSize);
+    }
+
+    @Override
+    public int getPageNumber() {
+        return super.getPageNumber() + 1;
     }
 }

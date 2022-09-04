@@ -21,7 +21,7 @@ public class ArticleController extends BaseController<Article> {
     public ListResponse getAll(@RequestParam(defaultValue = "1", required = false) Integer page,
                                @RequestParam(defaultValue = "30", required = false) Integer limit) {
         return this.listResponse("request success",
-                this.articleService.findPaging(RequestPaging.of(page - 1, limit)));
+                this.articleService.findPaging(RequestPaging.of(page, limit)));
     }
 
     @GetMapping("{id}")

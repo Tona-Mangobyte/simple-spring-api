@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     public ItemsPagination<User> findPaging(RequestPaging paging) {
         Page<User> userPage = this.userRepository.findAll(paging);
         return new ItemsPagination<>(userPage.stream().toList()
-                , new PagingResponse(userPage.getNumber() + 1, paging.getPageSize()
+                , new PagingResponse(userPage.getNumber(), paging.getPageSize()
                 , userPage.getTotalPages(), userPage.hasNext(), userPage.hasPrevious()));
     }
 
