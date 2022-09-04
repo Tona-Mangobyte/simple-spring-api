@@ -2,7 +2,6 @@ package com.mb.article.exceptions;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.data.rest.core.RepositoryConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,17 +9,17 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
-import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-@Order(Ordered.HIGHEST_PRECEDENCE)
-@ControllerAdvice
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
+@Deprecated
+// @Order(Ordered.HIGHEST_PRECEDENCE)
+// @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler  {
 
 
@@ -49,7 +48,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler  {
         return new ResponseEntity<>(new ApiError(false, ex.getMessage()), new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }*/
 
-    @ExceptionHandler({ RepositoryConstraintViolationException.class })
+    /*@ExceptionHandler({ RepositoryConstraintViolationException.class })
     public ResponseEntity<Object> handleValidationExceptions(
             Exception ex, WebRequest request) {
         RepositoryConstraintViolationException nevEx =
@@ -60,5 +59,5 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler  {
 
         return new ResponseEntity<Object>(errors, new HttpHeaders(),
                 HttpStatus.UNPROCESSABLE_ENTITY);
-    }
+    }*/
 }
