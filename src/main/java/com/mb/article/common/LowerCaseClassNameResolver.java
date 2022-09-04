@@ -1,4 +1,4 @@
-package com.mb.article.exceptions;
+package com.mb.article.common;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
