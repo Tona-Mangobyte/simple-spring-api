@@ -10,13 +10,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfigure {
     private static final String HEADER_TOKEN = "token";
+    private static final String HEADER_BEARER = "bearer"; // bearer
 
     @Bean
     OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .addSecurityItem(new SecurityRequirement().addList(HEADER_TOKEN))
+                .addSecurityItem(new SecurityRequirement().addList(HEADER_BEARER))
                 .components(new Components()
-                        .addSecuritySchemes(HEADER_TOKEN, securityScheme("api-key")));
+                        .addSecuritySchemes(HEADER_BEARER, securityScheme("Authentication")));
+                        // .addSecuritySchemes(HEADER_BEARER, securityScheme("x-api-key")));
     }
 
     private SecurityScheme securityScheme(String name) {
