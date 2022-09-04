@@ -20,17 +20,17 @@ public class ArticleController extends BaseController<Article> {
     @GetMapping
     public ListResponse getAll(@RequestParam(defaultValue = "1", required = false) Integer page,
                                @RequestParam(defaultValue = "30", required = false) Integer limit) {
-        return this.listResponse("request success",
+        return this.listResponse("Request is success",
                 this.articleService.findPaging(RequestPaging.of(page, limit)));
     }
 
     @GetMapping("{id}")
     public ObjectResponse<Article> getById(@PathVariable("id") Long id) {
-        return this.response("request success", this.articleService.findOne(id));
+        return this.response("Request is success", this.articleService.findOne(id));
     }
 
     @PostMapping
     public ObjectResponse<Article> create(@RequestBody ArticleRequest articleRequest) {
-        return this.response("request success", this.articleService.create(articleRequest));
+        return this.response("Request is success", this.articleService.create(articleRequest));
     }
 }

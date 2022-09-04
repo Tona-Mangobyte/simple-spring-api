@@ -1,6 +1,7 @@
 package com.mb.article.services.impl;
 
 import com.mb.article.api.request.JwtRequest;
+import com.mb.article.api.response.AuthResponse;
 import com.mb.article.security.JwtTokenUtil;
 import com.mb.article.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class AuthServiceImpl implements AuthService {
     UserDetailsService userDetailsService;
 
     @Override
-    public String authentication(JwtRequest auth) {
+    public AuthResponse authentication(JwtRequest auth) {
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(auth.username());
             authenticate(auth.username(), auth.password());

@@ -18,7 +18,6 @@ public class AuthController extends BaseController<AuthResponse> {
 
     @PostMapping("/login")
     public ObjectResponse<AuthResponse> auth(@RequestBody JwtRequest auth) {
-        String token = authService.authentication(auth);
-        return this.response("Authentication success", new AuthResponse(token));
+        return this.response("Authentication is success", authService.authentication(auth));
     }
 }

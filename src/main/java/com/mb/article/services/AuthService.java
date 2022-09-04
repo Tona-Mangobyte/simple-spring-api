@@ -1,7 +1,8 @@
 package com.mb.article.services;
 
 import com.mb.article.api.request.JwtRequest;
+import com.mb.article.api.response.AuthResponse;
 
 public interface AuthService {
-    String authentication(JwtRequest auth);
+    AuthResponse authentication(JwtRequest auth);
 }
