@@ -10,5 +10,7 @@ public interface UserService {
 
     User findOne(Long id);
 
+    User findByUsername(String username);
+
     User create(UserRequest userRequest);
 }

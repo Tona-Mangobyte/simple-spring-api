@@ -22,8 +22,8 @@ public class ArticleApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		User alreadySetup = this.userRepository.findByUsername("admin@mb.com");
-		if (alreadySetup != null)
+		Optional<User> alreadySetup = this.userRepository.findByUsername("admin@mb.com");
+		if (!alreadySetup.isEmpty())
 			return;
 
 		User adminUser = new User();

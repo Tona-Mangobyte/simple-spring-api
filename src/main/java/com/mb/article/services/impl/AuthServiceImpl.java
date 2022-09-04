@@ -28,12 +28,12 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponse authentication(AuthRequest auth) {
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(auth.username());
-            authenticate(auth.username(), auth.password());
+            this.authenticate(auth.username(), auth.password());
             return jwtTokenUtil.generateToken(userDetails);
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            throw new RuntimeException(e.getMessage(), e);
         }
-        return null;
     }
 
     private void authenticate(String username, String password) throws Exception {

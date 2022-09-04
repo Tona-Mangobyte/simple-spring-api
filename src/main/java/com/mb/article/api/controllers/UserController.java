@@ -6,10 +6,12 @@ import com.mb.article.api.response.ListResponse;
 import com.mb.article.api.response.ObjectResponse;
 import com.mb.article.models.User;
 import com.mb.article.services.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
+@Tag(name = "Users")
 public class UserController extends BaseController<User> {
     private final UserService userService;
 

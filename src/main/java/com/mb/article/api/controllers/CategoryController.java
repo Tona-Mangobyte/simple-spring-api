@@ -6,10 +6,12 @@ import com.mb.article.api.response.ListResponse;
 import com.mb.article.api.response.ObjectResponse;
 import com.mb.article.models.Category;
 import com.mb.article.services.CategoryService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/category")
+@Tag(name = "Categories")
 public class CategoryController extends BaseController<Category> {
     private final CategoryService categoryService;
     public CategoryController(final CategoryService categoryService){

@@ -6,10 +6,12 @@ import com.mb.article.api.response.ListResponse;
 import com.mb.article.api.response.ObjectResponse;
 import com.mb.article.models.Article;
 import com.mb.article.services.ArticleService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/article")
+@Tag(name = "Articles")
 public class ArticleController extends BaseController<Article> {
     private final ArticleService articleService;
 

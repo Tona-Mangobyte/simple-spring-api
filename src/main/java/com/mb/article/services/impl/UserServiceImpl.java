@@ -9,6 +9,7 @@ import com.mb.article.models.User;
 import com.mb.article.repositories.UserRepository;
 import com.mb.article.services.UserService;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -32,6 +33,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findOne(Long id) {
         return this.userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return this.userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
     }
 
     @Override
