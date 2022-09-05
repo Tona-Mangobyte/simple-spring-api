@@ -6,6 +6,7 @@ import com.mb.article.api.request.RequestPaging;
 import com.mb.article.api.response.ItemsPagination;
 import com.mb.article.api.response.PagingResponse;
 import com.mb.article.models.Article;
+import com.mb.article.models.Comment;
 import com.mb.article.repositories.ArticleRepository;
 import com.mb.article.services.ArticleService;
 import com.mb.article.services.CommentService;
@@ -55,5 +56,10 @@ public class ArticleServiceImpl implements ArticleService {
     public Article createComment(Long articleId, CommentRequest commentRequest) {
         this.commentService.create(articleId, commentRequest);
         return this.findOne(articleId);
+    }
+
+    @Override
+    public List<Comment> findAllCommentsByArticleId(Long articleId) {
+        return this.commentService.findAllByArticleId(articleId);
     }
 }

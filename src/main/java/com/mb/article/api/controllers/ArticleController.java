@@ -6,6 +6,7 @@ import com.mb.article.api.request.RequestPaging;
 import com.mb.article.api.response.ListResponse;
 import com.mb.article.api.response.ObjectResponse;
 import com.mb.article.models.Article;
+import com.mb.article.models.Comment;
 import com.mb.article.services.ArticleService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/article")
@@ -37,6 +39,12 @@ public class ArticleController extends BaseController<Article> {
     @PostMapping
     public ObjectResponse<Article> create(@Valid @RequestBody ArticleRequest articleRequest) {
         return this.response("Request is success", this.articleService.create(articleRequest));
+    }
+
+    @GetMapping("{articleId}/comment")
+    public List<Comment> getCommentsByArticleId(@PathVariable("articleId") Long articleId) {
+        log.info("Find Comments by article id: {}", articleId);
+        return this.articleService.findAllCommentsByArticleId(articleId);
     }
 
     @PostMapping("{id}/comment")

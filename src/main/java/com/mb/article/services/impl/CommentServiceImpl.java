@@ -9,6 +9,8 @@ import com.mb.article.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CommentServiceImpl implements CommentService {
 
@@ -17,6 +19,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private ArticleService articleService;
+
+    @Override
+    public List<Comment> findAllByArticleId(Long articleId) {
+        return this.commentRepository.findAllByArticleId(articleId);
+    }
 
     @Override
     public Comment create(Long articleId, CommentRequest commentRequest) {

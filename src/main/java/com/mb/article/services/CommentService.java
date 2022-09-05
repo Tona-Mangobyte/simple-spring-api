@@ -6,7 +6,7 @@ import com.mb.article.models.Comment;
 import java.util.List;
 
 public interface CommentService {
-    // List<Comment> findAllByArticleId(Long id);
+    List<Comment> findAllByArticleId(Long articleId);
 
     Comment create(Long articleId, CommentRequest commentRequest);
 }
