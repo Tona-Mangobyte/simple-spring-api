@@ -1,12 +1,15 @@
 package com.mb.article.services.impl;
 
 import com.mb.article.api.request.ArticleRequest;
+import com.mb.article.api.request.CommentRequest;
 import com.mb.article.api.request.RequestPaging;
 import com.mb.article.api.response.ItemsPagination;
 import com.mb.article.api.response.PagingResponse;
 import com.mb.article.models.Article;
 import com.mb.article.repositories.ArticleRepository;
 import com.mb.article.services.ArticleService;
+import com.mb.article.services.CommentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +18,11 @@ import java.util.List;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
-    private final ArticleRepository articleRepository;
 
-    public ArticleServiceImpl(final ArticleRepository articleRepository) {
-        this.articleRepository = articleRepository;
-    }
+    @Autowired
+    private ArticleRepository articleRepository;
+    @Autowired
+    private CommentService commentService;
 
     @Override
     public List<Article> findAll() {
@@ -46,5 +49,11 @@ public class ArticleServiceImpl implements ArticleService {
         article.setTitle(articleRequest.title());
         article.setContent(articleRequest.content());
         return this.articleRepository.save(article);
+    }
+
+    @Override
+    public Article createComment(Long articleId, CommentRequest commentRequest) {
+        this.commentService.create(articleId, commentRequest);
+        return this.findOne(articleId);
     }
 }

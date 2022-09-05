@@ -7,6 +7,7 @@ import com.mb.article.api.response.PagingResponse;
 import com.mb.article.models.Category;
 import com.mb.article.repositories.CategoryRepository;
 import com.mb.article.services.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,8 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryRepository categoryRepository;
-    public CategoryServiceImpl(final CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public List<Category> findAll() {

@@ -1,6 +1,7 @@
 package com.mb.article.services;
 
 import com.mb.article.api.request.ArticleRequest;
+import com.mb.article.api.request.CommentRequest;
 import com.mb.article.api.request.RequestPaging;
 import com.mb.article.api.response.ItemsPagination;
 import com.mb.article.models.Article;
@@ -15,4 +16,6 @@ public interface ArticleService {
     Article findOne(Long id);
 
     Article create(ArticleRequest articleRequest);
+
+    Article createComment(Long articleId, CommentRequest commentRequest);
 }
