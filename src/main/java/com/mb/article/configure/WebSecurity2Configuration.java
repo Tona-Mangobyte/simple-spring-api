@@ -1,11 +1,17 @@
 package com.mb.article.configure;
 
+import com.mb.article.security.voter.AccessDecisionVoterImpl;
 import com.mb.article.security.JwtAuthenticationEntryPoint;
 import com.mb.article.security.JwtRequestFilter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
+import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.vote.AuthenticatedVoter;
+import org.springframework.security.access.vote.RoleVoter;
+import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,13 +20,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-// @Configuration
-// @EnableWebSecurity
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+import java.util.Arrays;
+import java.util.List;
+
+
+@Configuration
+@EnableWebSecurity
+@Slf4j
+public class WebSecurity2Configuration extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
@@ -33,25 +45,34 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Bean
+    public AccessDecisionManager accessDecisionManager() {
+        List<AccessDecisionVoter<? extends Object>> decisionVoters
+                = Arrays.asList(
+                new WebExpressionVoter(),
+                new RoleVoter(),
+                new AuthenticatedVoter(),
+                new AccessDecisionVoterImpl()
+        );
+        log.info("decisionVoters {}", decisionVoters);
+        return new UnanimousBased(decisionVoters);
+    }
+
+    @Override
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        /* http.antMatcher("/api/**")
-                .authorizeRequests(); */
-        // We don't need CSRF for this example
         http.csrf().disable()
-                // dont authenticate this particular request
                 .authorizeRequests()
                 .antMatchers("/api/login").permitAll()
-
                 // all other requests need to be authenticated
-                .anyRequest().authenticated().and().
-                // make sure we use stateless session; session won't be used to
-                // store user's state.
-                        exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .anyRequest()
+                .authenticated().accessDecisionManager(accessDecisionManager()).
+                and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
