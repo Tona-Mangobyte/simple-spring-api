@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api")
 @Tag(name = "Auth")
@@ -19,7 +21,7 @@ public class AuthController extends BaseController<AuthResponse> {
     private AuthService authService;
 
     @PostMapping("/login")
-    public ObjectResponse<AuthResponse> auth(@RequestBody AuthRequest auth) {
+    public ObjectResponse<AuthResponse> auth(@Valid @RequestBody AuthRequest auth) {
         return this.response("Authentication is success", authService.authentication(auth));
     }
 }

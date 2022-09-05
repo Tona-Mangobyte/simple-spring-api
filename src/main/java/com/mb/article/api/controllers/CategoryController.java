@@ -9,6 +9,8 @@ import com.mb.article.services.CategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/category")
 @Tag(name = "Categories")
@@ -32,7 +34,7 @@ public class CategoryController extends BaseController<Category> {
     }
 
     @PostMapping
-    public ObjectResponse<Category> create(@RequestBody CategoryRequest categoryRequest) {
+    public ObjectResponse<Category> create(@Valid @RequestBody CategoryRequest categoryRequest) {
         return this.response("Request is success", this.categoryService.create(categoryRequest));
     }
 }

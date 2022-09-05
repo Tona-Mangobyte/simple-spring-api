@@ -9,6 +9,8 @@ import com.mb.article.services.ArticleService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/article")
 @Tag(name = "Articles")
@@ -32,7 +34,7 @@ public class ArticleController extends BaseController<Article> {
     }
 
     @PostMapping
-    public ObjectResponse<Article> create(@RequestBody ArticleRequest articleRequest) {
+    public ObjectResponse<Article> create(@Valid @RequestBody ArticleRequest articleRequest) {
         return this.response("Request is success", this.articleService.create(articleRequest));
     }
 }

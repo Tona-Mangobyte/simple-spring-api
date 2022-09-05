@@ -9,6 +9,8 @@ import com.mb.article.services.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/users")
 @Tag(name = "Users")
@@ -33,7 +35,7 @@ public class UserController extends BaseController<User> {
     }
 
     @PostMapping
-    public ObjectResponse<User> create(@RequestBody UserRequest userRequest) {
+    public ObjectResponse<User> create(@Valid @RequestBody UserRequest userRequest) {
         return this.response("Request is success", this.userService.create(userRequest));
     }
 }
