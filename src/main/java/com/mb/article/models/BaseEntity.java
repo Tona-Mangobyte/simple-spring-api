@@ -1,6 +1,7 @@
 package com.mb.article.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -29,6 +30,7 @@ public class BaseEntity implements Serializable {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     @CreatedBy
     @JoinColumn(name = "created_by")
     private String createdBy;
@@ -37,6 +39,7 @@ public class BaseEntity implements Serializable {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    @JsonIgnore
     @JoinColumn(name = "updated_by")
     @LastModifiedBy
     private String updatedBy;
