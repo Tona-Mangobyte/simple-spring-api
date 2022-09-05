@@ -3,6 +3,7 @@ package com.mb.article.services.impl;
 import com.mb.article.api.request.ArticleRequest;
 import com.mb.article.api.request.CommentRequest;
 import com.mb.article.api.request.RequestPaging;
+import com.mb.article.api.response.ArticleCommentsResponse;
 import com.mb.article.api.response.ItemsPagination;
 import com.mb.article.api.response.PagingResponse;
 import com.mb.article.models.Article;
@@ -61,5 +62,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Comment> findAllCommentsByArticleId(Long articleId) {
         return this.commentService.findAllByArticleId(articleId);
+    }
+
+    @Override
+    public ArticleCommentsResponse findAllByArticleIdAndPaging(Long articleId, RequestPaging paging) {
+         return new ArticleCommentsResponse(this.findOne(articleId), this.commentService.findAllByArticleIdAndPaging(articleId, paging));
     }
 }

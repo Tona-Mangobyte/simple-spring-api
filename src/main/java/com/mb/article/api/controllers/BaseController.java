@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.Map;
 
 @SecurityRequirement(name = "bearerToken")
-public class BaseController<T> {
-    protected ListResponse listResponse(String message, ItemsPagination<T> data) {
+public class BaseController {
+    protected ListResponse listResponse(String message, ItemsPagination<?> data) {
         return new ListResponse(true, message, data);
     }
 
-    protected ObjectResponse response(String message, T data) {
+    protected ObjectResponse response(String message, Object data) {
         return new ObjectResponse<>(true, message, data);
     }
 }

@@ -3,10 +3,10 @@ package com.mb.article.api.controllers;
 import com.mb.article.api.request.ArticleRequest;
 import com.mb.article.api.request.CommentRequest;
 import com.mb.article.api.request.RequestPaging;
+import com.mb.article.api.response.ArticleCommentsResponse;
 import com.mb.article.api.response.ListResponse;
 import com.mb.article.api.response.ObjectResponse;
 import com.mb.article.models.Article;
-import com.mb.article.models.Comment;
 import com.mb.article.services.ArticleService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -14,13 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/article")
 @Tag(name = "Articles")
 @Slf4j
-public class ArticleController extends BaseController<Article> {
+public class ArticleController extends BaseController {
     @Autowired
     private ArticleService articleService;
 
@@ -42,9 +41,11 @@ public class ArticleController extends BaseController<Article> {
     }
 
     @GetMapping("{articleId}/comment")
-    public List<Comment> getCommentsByArticleId(@PathVariable("articleId") Long articleId) {
+    public ObjectResponse<ArticleCommentsResponse> getCommentsByArticleId(@PathVariable("articleId") Long articleId,
+                                                                          @RequestParam(defaultValue = "1", required = false) Integer page,
+                                                                          @RequestParam(defaultValue = "30", required = false) Integer limit) {
         log.info("Find Comments by article id: {}", articleId);
-        return this.articleService.findAllCommentsByArticleId(articleId);
+        return this.response("Request is success", this.articleService.findAllByArticleIdAndPaging(articleId, RequestPaging.of(page, limit)));
     }
 
     @PostMapping("{id}/comment")

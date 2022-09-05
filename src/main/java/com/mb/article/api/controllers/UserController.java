@@ -15,7 +15,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/users")
 @Tag(name = "Users")
-public class UserController extends BaseController<User> {
+public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 

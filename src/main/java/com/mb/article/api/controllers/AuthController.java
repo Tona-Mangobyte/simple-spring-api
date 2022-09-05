@@ -16,7 +16,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api")
 @Tag(name = "Auth")
-public class AuthController extends BaseController<AuthResponse> {
+public class AuthController extends BaseController {
     @Autowired
     private AuthService authService;
 
