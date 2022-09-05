@@ -22,6 +22,6 @@ public class AuthController extends BaseController {
 
     @PostMapping("/login")
     public ObjectResponse<AuthResponse> auth(@Valid @RequestBody AuthRequest auth) {
-        return this.response("Authentication is success", authService.authentication(auth));
+        return this.response("request.success", authService.authentication(auth));
     }
 }

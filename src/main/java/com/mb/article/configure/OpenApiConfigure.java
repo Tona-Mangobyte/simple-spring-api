@@ -13,8 +13,10 @@ public class OpenApiConfigure {
     @Bean
     public OpenAPI customOpenAPI() {
         final String securitySchemeName = "bearerToken";
+        final String lang = "lang";
         return new OpenAPI()
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
+                .addSecurityItem(new SecurityRequirement().addList(lang))
                 .components(
                         new Components()
                                 .addSecuritySchemes(securitySchemeName,
@@ -23,6 +25,12 @@ public class OpenApiConfigure {
                                                 .type(SecurityScheme.Type.HTTP)
                                                 .scheme("bearer")
                                                 .bearerFormat("JWT")
+                                )
+                                .addSecuritySchemes(lang,
+                                        new SecurityScheme()
+                                                .name("Accept-Language")
+                                                .type(SecurityScheme.Type.APIKEY)
+                                                .in(SecurityScheme.In.HEADER)
                                 )
                 )
                 .info(new Info().title("Rest API").version("1.0"));

@@ -24,17 +24,17 @@ public class CategoryController extends BaseController {
     public ListResponse getAll(
             @RequestParam(defaultValue = "1", required = false) Integer page,
             @RequestParam(defaultValue = "30", required = false) Integer limit) {
-        return this.listResponse("Request is success",
+        return this.listResponse("request.success",
                 this.categoryService.findPaging(RequestPaging.of(page, limit)));
     }
 
     @GetMapping("{id}")
     public ObjectResponse<Category> getById(@PathVariable("id") Long id) {
-        return this.response("Request is success", this.categoryService.findOne(id));
+        return this.response("request.success", this.categoryService.findOne(id));
     }
 
     @PostMapping
     public ObjectResponse<Category> create(@Valid @RequestBody CategoryRequest categoryRequest) {
-        return this.response("Request is success", this.categoryService.create(categoryRequest));
+        return this.response("request.success", this.categoryService.create(categoryRequest));
     }
 }
