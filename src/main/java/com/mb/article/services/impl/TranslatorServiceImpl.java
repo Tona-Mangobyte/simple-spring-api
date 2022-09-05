@@ -21,6 +21,7 @@ public class TranslatorServiceImpl implements TranslatorService {
     public String translate(String key) {
         Locale locale = LocaleContextHolder.getLocale();
         log.info("Current Language: {}", locale);
+        log.info("Translate Language: {}", this.messageSource.getMessage(key, null, locale));
         return this.messageSource.getMessage(key, null, locale);
     }
 }
