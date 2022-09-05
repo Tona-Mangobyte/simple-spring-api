@@ -34,3 +34,4 @@ build/
 
 ### app.confiure | environment varibles
 application-dev.properties
+*-dev.properties
