@@ -35,4 +35,4 @@ build/
 ### app.confiure | environment varibles
 *.properties
 src/main/resources/application-dev.properties
-!src/main/**/application-dev.properties
+!/src/main/**/application-dev.properties
