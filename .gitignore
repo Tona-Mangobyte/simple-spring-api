@@ -33,5 +33,4 @@ build/
 .vscode/
 
 ### app.confiure | environment varibles
-application.properties
-!**/src/main/**/application-*.properties
+/src/main/resources/application-dev.properties
