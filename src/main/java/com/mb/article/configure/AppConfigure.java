@@ -13,9 +13,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
+@EnableJpaAuditing(auditorAwareRef = "auditorProvider")
 @EnableJpaRepositories("com.mb.article.repositories")
 @EntityScan("com.mb.article.models")
-@EnableJpaAuditing(auditorAwareRef = "auditorProvider")
 public class AppConfigure {
 
     @Bean
