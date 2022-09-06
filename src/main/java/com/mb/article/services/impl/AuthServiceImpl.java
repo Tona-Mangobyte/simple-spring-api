@@ -8,6 +8,7 @@ import com.mb.article.redis.services.AccessTokenService;
 import com.mb.article.security.JwtTokenUtil;
 import com.mb.article.services.AuthService;
 import com.mb.article.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class AuthServiceImpl implements AuthService {
     @Autowired
     AuthenticationManager authenticationManager;
@@ -43,7 +45,11 @@ public class AuthServiceImpl implements AuthService {
             UserDetails userDetails = userDetailsService.loadUserByUsername(auth.username());
             this.authenticate(auth.username(), auth.password());
             AuthResponse authResponse = jwtTokenUtil.generateToken(userDetails);
-            accessTokenService.save(new AccessToken(UUID.randomUUID().toString(), user.getId(), authResponse.accessToken()));
+            AccessToken accessToken = new AccessToken();
+            accessToken.setId(user.getId()+":"+UUID.randomUUID());
+            accessToken.setUserId(user.getId());
+            accessToken.setToken(authResponse.accessToken());
+            accessTokenService.save(accessToken);
             return authResponse;
         } catch (Exception e) {
             System.err.println(e.getMessage());
