@@ -2,8 +2,12 @@ package com.mb.article.services.impl;
 
 import com.mb.article.api.request.AuthRequest;
 import com.mb.article.api.response.AuthResponse;
+import com.mb.article.models.User;
+import com.mb.article.redis.model.AccessToken;
+import com.mb.article.redis.services.AccessTokenService;
 import com.mb.article.security.JwtTokenUtil;
 import com.mb.article.services.AuthService;
+import com.mb.article.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -12,6 +16,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -24,12 +30,21 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     UserDetailsService userDetailsService;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    AccessTokenService accessTokenService;
+
     @Override
     public AuthResponse authentication(AuthRequest auth) {
         try {
+            User user = userService.findByUsername(auth.username());
             UserDetails userDetails = userDetailsService.loadUserByUsername(auth.username());
             this.authenticate(auth.username(), auth.password());
-            return jwtTokenUtil.generateToken(userDetails);
+            AuthResponse authResponse = jwtTokenUtil.generateToken(userDetails);
+            accessTokenService.save(new AccessToken(UUID.randomUUID().toString(), user.getId(), authResponse.accessToken()));
+            return authResponse;
         } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new RuntimeException(e.getMessage(), e);
